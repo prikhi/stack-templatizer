@@ -1,5 +1,8 @@
 # stack-templatizer
 
+[![stack-templatizer Build Status](https://travis-ci.org/prikhi/stack-templatizer.svg?branch=master)](https://travis-ci.org/prikhi/stack-templatizer)
+
+
 Stack Templatizer is a small application that lets you generate stack template
 `hsfiles` from a folder.
 
