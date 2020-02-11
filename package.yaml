@@ -35,9 +35,9 @@ description: |
 
 dependencies:
     - base >= 4.7 && < 5
-    - bytestring
-    - directory
-    - filepath
+    - bytestring < 1
+    - directory >= 1 && < 2
+    - filepath >= 1 && < 2
 
 executables:
     stack-templatizer:
