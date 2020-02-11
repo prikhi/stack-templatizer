@@ -22,6 +22,7 @@ category:
     Web
 extra-source-files:
     - README.md
+    - CHANGELOG.md
 
 synopsis:
     Generate a stack template from a folder.
