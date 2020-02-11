@@ -1,20 +1,44 @@
-name:                stack-templatizer
-version:             0.1.0.0
-#synopsis:
-#description:
-homepage:            https://github.com/prikhi/stack-templatizer#readme
-license:             BSD3
-author:              Pavan Rikhi
-maintainer:          pavan.rikhi@gmail.com
-copyright:           2019 Pavan Rikhi
-category:            Web
+---
+
+name:
+    stack-templatizer
+version:
+    0.1.0.0
+github:
+    prikhi/stack-templatizer
+homepage:
+    https://github.com/prikhi/stack-templatizer#readme
+license:
+    BSD3
+license-file:
+    LICENSE
+author:
+    Pavan Rikhi
+maintainer:
+    pavan.rikhi@gmail.com
+copyright:
+    2020 Pavan Rikhi
+category:
+    Web
 extra-source-files:
-- README.md
+    - README.md
+
+synopsis:
+    Generate a stack template from a folder.
+description: |
+    @stack-templatizer@ is an application that generates a @.hsfiles@ stack
+    template from a folder of template files.
+
+    You can install the application using @stack install stack-templatizer
+    --resolver nightly@ or by cloning the repository and running @stack
+    install@
 
 dependencies:
-  - base >= 4.7 && < 5
+    - base >= 4.7 && < 5
 
 executables:
-  stack-templatizer:
-    source-dirs:      src
-    main:             Main.hs
+    stack-templatizer:
+        source-dirs:
+            src
+        main:
+            Main.hs
