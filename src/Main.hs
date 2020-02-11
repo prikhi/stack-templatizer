@@ -34,26 +34,31 @@ printHelp = mapM_
 templatize :: FilePath -> IO LBS.ByteString
 templatize folder = do
     fileNames        <- getFilesInDirectory folder
-    namesAndContents <- mapM (\file -> (file, ) <$> LBS.readFile file) fileNames
+    namesAndContents <- mapM
+        (\file -> (file, ) <$> LBS.readFile (folder </> file))
+        fileNames
     return $ generateHFiles namesAndContents
 
 
 getFilesInDirectory :: FilePath -> IO [FilePath]
-getFilesInDirectory = recursiveList ""
+getFilesInDirectory baseDirectory = do
+    basePaths <- listDirectory baseDirectory
+    concat <$> mapM (recursiveList "") basePaths
   where
     recursiveList :: String -> FilePath -> IO [FilePath]
     recursiveList parentDir path = do
-        let fullPath = parentDir </> path
+        let templatePath = parentDir </> path
+            fullPath     = baseDirectory </> templatePath
         isDirectory <- doesDirectoryExist fullPath
         if isDirectory
             then do
                 files <- listDirectory fullPath
-                concat <$> mapM (recursiveList fullPath) files
-            else return [fullPath]
+                concat <$> mapM (recursiveList templatePath) files
+            else return [templatePath]
 
 
 generateHFiles :: [(FilePath, LBS.ByteString)] -> LBS.ByteString
-generateHFiles = LBS.intercalate "\n\n" . map prefixName
+generateHFiles = LBS.intercalate "\n" . map prefixName
   where
     prefixName :: (FilePath, LBS.ByteString) -> LBS.ByteString
     prefixName (file, contents) =
