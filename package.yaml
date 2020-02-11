@@ -1,0 +1,20 @@
+name:                stack-templatizer
+version:             0.1.0.0
+#synopsis:
+#description:
+homepage:            https://github.com/prikhi/stack-templatizer#readme
+license:             BSD3
+author:              Pavan Rikhi
+maintainer:          pavan.rikhi@gmail.com
+copyright:           2019 Pavan Rikhi
+category:            Web
+extra-source-files:
+- README.md
+
+dependencies:
+  - base >= 4.7 && < 5
+
+executables:
+  stack-templatizer:
+    source-dirs:      src
+    main:             Main.hs
