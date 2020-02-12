@@ -3,7 +3,7 @@
 name:
     stack-templatizer
 version:
-    0.1.0.0
+    0.1.0.1
 github:
     prikhi/stack-templatizer
 homepage:
@@ -30,9 +30,12 @@ description: |
     @stack-templatizer@ is an application that generates a @.hsfiles@ stack
     template from a folder of template files.
 
-    You can install the application using @stack install stack-templatizer
-    --resolver nightly@ or by cloning the repository and running @stack
-    install@
+    You can install the application using @stack install
+    stack-templatizer --resolver nightly@ or by cloning the repository and
+    running @stack install@.
+
+    Then run @stack-templatizer my-folder@ to turn all the files in @my-folder@
+    into a @my-folder.hsfiles@ stack template.
 
 dependencies:
     - base >= 4.7 && < 5
