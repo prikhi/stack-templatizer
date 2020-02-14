@@ -22,6 +22,10 @@ Once installed, you can run `stack-templatizer my-template-folder` to generate
 a `my-template-folder.hsfiles` stack template.
 
 
+For an example repository that generates a stack template, see
+[hpack-template](https://github.com/prikhi/hpack-template).
+
+
 # LICENSE
 
 BSD-3-Clause
