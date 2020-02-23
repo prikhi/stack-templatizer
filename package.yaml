@@ -37,6 +37,9 @@ description: |
     Then run @stack-templatizer my-folder@ to turn all the files in @my-folder@
     into a @my-folder.hsfiles@ stack template.
 
+    You can see an example folder & the generated @hs-files@ in the
+    <https://github.com/prikhi/hpack-template hpack template repository>.
+
 dependencies:
     - base >= 4.7 && < 5
     - bytestring < 1
