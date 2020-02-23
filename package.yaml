@@ -19,7 +19,7 @@ maintainer:
 copyright:
     2020 Pavan Rikhi
 category:
-    Web
+    Development
 extra-source-files:
     - README.md
     - CHANGELOG.md
