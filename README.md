@@ -10,7 +10,7 @@ Install or clone & build the project using `stack`:
 
 ```
 # Install from Stack Nightly
-stack install stack-templatizer --nightly
+stack install stack-templatizer --resolver nightly
 
 # Or build and install from source
 git clone https://github.com/prikhi/stack-templatizer
