@@ -12,6 +12,7 @@ import           System.FilePath                ( (</>) )
 
 import qualified Data.ByteString.Lazy          as LBS
 import qualified Data.ByteString.Lazy.Char8    as LC
+import Data.List (sort)
 
 main :: IO ()
 main = getArgs >>= \case
@@ -42,9 +43,10 @@ templatize folder = do
 
 getFilesInDirectory :: FilePath -> IO [FilePath]
 getFilesInDirectory baseDirectory = do
-    basePaths <- listDirectory baseDirectory
+    basePaths <- listDirSorted baseDirectory
     concat <$> mapM (recursiveList "") basePaths
   where
+    listDirSorted = fmap sort . listDirectory
     recursiveList :: String -> FilePath -> IO [FilePath]
     recursiveList parentDir path = do
         let templatePath = parentDir </> path
@@ -52,7 +54,7 @@ getFilesInDirectory baseDirectory = do
         isDirectory <- doesDirectoryExist fullPath
         if isDirectory
             then do
-                files <- listDirectory fullPath
+                files <- listDirSorted fullPath
                 concat <$> mapM (recursiveList templatePath) files
             else return [templatePath]
 
