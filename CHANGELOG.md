@@ -2,6 +2,8 @@
 
 ## master
 
+## v0.1.1.0
+
 * Output files in sorted ordering.
 
 ## v0.1.0.2

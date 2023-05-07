@@ -3,7 +3,7 @@
 name:
     stack-templatizer
 version:
-    0.1.0.2
+    0.1.1.0
 github:
     prikhi/stack-templatizer
 homepage:
@@ -17,7 +17,7 @@ author:
 maintainer:
     pavan.rikhi@gmail.com
 copyright:
-    2020 Pavan Rikhi
+    2020-2023 Pavan Rikhi
 category:
     Development
 extra-source-files:
