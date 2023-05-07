@@ -3,6 +3,7 @@
 {-# LANGUAGE TupleSections #-}
 module Main where
 
+import           Data.List                      ( sort )
 import           System.Directory               ( listDirectory
                                                 , doesDirectoryExist
                                                 )
@@ -12,7 +13,6 @@ import           System.FilePath                ( (</>) )
 
 import qualified Data.ByteString.Lazy          as LBS
 import qualified Data.ByteString.Lazy.Char8    as LC
-import Data.List (sort)
 
 main :: IO ()
 main = getArgs >>= \case
@@ -46,7 +46,9 @@ getFilesInDirectory baseDirectory = do
     basePaths <- listDirSorted baseDirectory
     concat <$> mapM (recursiveList "") basePaths
   where
-    listDirSorted = fmap sort . listDirectory
+    listDirSorted :: FilePath -> IO [FilePath]
+    listDirSorted =
+        fmap sort . listDirectory
     recursiveList :: String -> FilePath -> IO [FilePath]
     recursiveList parentDir path = do
         let templatePath = parentDir </> path
