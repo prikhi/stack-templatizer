@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## master
+
+* Output files in sorted ordering.
+
 ## v0.1.0.2
 
 * Fix package category, from Web to Development.
