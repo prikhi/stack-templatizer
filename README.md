@@ -1,6 +1,6 @@
 # stack-templatizer
 
-[![stack-templatizer Build Status](https://travis-ci.org/prikhi/stack-templatizer.svg?branch=master)](https://travis-ci.org/prikhi/stack-templatizer)
+[![stack-templatizer Build Status](https://github.com/prikhi/stack-templatizer/actions/workflows/main.yml/badge.svg)](https://github.com/prikhi/stack-templatizer/actions/workflows/main.yml)
 
 
 Stack Templatizer is a small application that lets you generate stack template
@@ -8,7 +8,7 @@ Stack Templatizer is a small application that lets you generate stack template
 
 Install or clone & build the project using `stack`:
 
-```
+```sh
 # Install from Stack Nightly
 stack install stack-templatizer --resolver nightly
 
@@ -26,6 +26,6 @@ For an example repository that generates a stack template, see
 [hpack-template](https://github.com/prikhi/hpack-template).
 
 
-# LICENSE
+## LICENSE
 
 BSD-3-Clause
