@@ -1,11 +1,11 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.39.6.
+-- This file has been generated from package.yaml by hpack version 0.39.1.
 --
 -- see: https://github.com/sol/hpack
 
 name:           stack-templatizer
-version:        0.1.1.0
+version:        0.1.2.0
 synopsis:       Generate a stack template from a folder.
 description:    @stack-templatizer@ is an application that generates a @.hsfiles@ stack
                 template from a folder of template files.
@@ -24,7 +24,7 @@ homepage:       https://github.com/prikhi/stack-templatizer#readme
 bug-reports:    https://github.com/prikhi/stack-templatizer/issues
 author:         Pavan Rikhi
 maintainer:     pavan.rikhi@gmail.com
-copyright:      2020-2023 Pavan Rikhi
+copyright:      2020-2026 Pavan Rikhi
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple

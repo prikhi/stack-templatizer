@@ -2,6 +2,9 @@
 
 ## master
 
+
+## v0.1.2.0
+
 * Embed files that are not valid UTF-8 as base64-encoded
   `{-# START_FILE BASE64 <name> #-}` sections.
 
