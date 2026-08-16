@@ -2,6 +2,9 @@
 
 ## master
 
+* Embed files that are not valid UTF-8 as base64-encoded
+  `{-# START_FILE BASE64 <name> #-}` sections.
+
 ## v0.1.1.0
 
 * Output files in sorted ordering.

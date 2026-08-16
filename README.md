@@ -21,6 +21,10 @@ stack install
 Once installed, you can run `stack-templatizer my-template-folder` to generate
 a `my-template-folder.hsfiles` stack template.
 
+Files that are not valid UTF-8 (images, archives, etc.) are embedded as
+base64-encoded `{-# START_FILE BASE64 <name> #-}` sections, which `stack new`
+decodes back into the original binary files.
+
 
 For an example repository that generates a stack template, see
 [hpack-template](https://github.com/prikhi/hpack-template).
