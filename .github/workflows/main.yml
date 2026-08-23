@@ -20,9 +20,9 @@ jobs:
     name: Stack
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Cache Stack Artifacts
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           key: stack-build-lts-${{ github.ref }}-${{ github.sha }}
           path: |
@@ -43,12 +43,12 @@ jobs:
     name: Stackage Nightly
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Get Current Date
         id: date
         run: echo -e "::set-output name=year::$(date +%Y)\n::set-output name=month::$(date +%m)\n::set-output name=day::$(date +%d)"
       - name: Cache Stack Artifacts
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           key: stack-build-nightly-${{ steps.date.outputs.year }}-${{ steps.date.outputs.month }}-${{ steps.date.outputs.day }}-${{ github.ref }}-${{ github.sha }}
           path: |
@@ -60,7 +60,7 @@ jobs:
             stack-build-nightly-${{ steps.date.outputs.year }}-${{ steps.date.outputs.month }}-
             stack-build-nightly-${{ steps.date.outputs.year }}-
             stack-build-nightly-
-      - uses: haskell.actions/setup@v2
+      - uses: haskell-actions/setup@v2
         with:
           enable-stack: true
           stack-no-global: true
@@ -75,9 +75,9 @@ jobs:
       matrix:
         ghc: ['9.6', '9.8', '9.10']
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v7
       - name: Cache Cabal Artifacts
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           key: cabal-build-${{ matrix.ghc }}-${{ github.ref }}-${{ github.sha }}
           path: |
