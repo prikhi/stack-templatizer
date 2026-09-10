@@ -3,7 +3,14 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/topics/lock_files
 
-packages: []
+packages:
+- completed:
+    hackage: gitignore-ospath-0.1.0.2@sha256:e1d59cca83160534572681fd6a1e4ad21e218bd7350a0b20dab36d4b9c985fc7,1857
+    pantry-tree:
+      sha256: 39d52c6f41bb9329ddd72434d1bb51f0d19fff8258b586bdc55e108a1828634d
+      size: 343
+  original:
+    hackage: gitignore-ospath-0.1.0.2
 snapshots:
 - completed:
     sha256: 1c2140555bdf61c30a893b3ec1033987d01eda75ce82a1dda033e8fb6f8b322c

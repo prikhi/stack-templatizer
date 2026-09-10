@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.39.1.
+-- This file has been generated from package.yaml by hpack version 0.39.6.
 --
 -- see: https://github.com/sol/hpack
 
@@ -47,5 +47,7 @@ executable stack-templatizer
     , base64-bytestring ==1.*
     , bytestring >=0.11.2 && <1
     , directory ==1.*
-    , filepath ==1.*
+    , filepath >=1.5 && <2
+    , gitignore-ospath ==0.1.*
+    , text ==2.*
   default-language: Haskell2010

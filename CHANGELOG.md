@@ -2,6 +2,9 @@
 
 ## master
 
+* Skip files matched by `.gitignore`, including nested `.gitignore` files,
+  and auto-exclude `.git` when a top-level `.gitignore` is present.
+
 
 ## v0.1.2.0
 
