@@ -47,6 +47,7 @@ dependencies:
     - directory >= 1 && < 2
     - filepath >= 1.5 && < 2
     - gitignore-ospath >= 0.1 && < 0.2
+    - optparse-applicative >= 0.18 && < 0.19
     - text >= 2 && < 3
 
 executables:

@@ -30,6 +30,12 @@ files in subdirectories, with nearer `.gitignore` files taking precedence
 over farther ones. If a top-level `.gitignore` is present, `.git` is
 skipped as well.
 
+Occurrences of a name token (`--name-token`, default `PACKAGENAME`) in file
+names and UTF-8 file contents are replaced with `{{name}}`. This lets the
+source folder stay a normal, compilable package — using the token as a
+literal placeholder name — while the generated template still uses Stack's
+own `{{name}}` substitution when unpacked with `stack new`.
+
 
 For an example repository that generates a stack template, see
 [hpack-template](https://github.com/prikhi/hpack-template).
