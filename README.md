@@ -25,6 +25,11 @@ Files that are not valid UTF-8 (images, archives, etc.) are embedded as
 base64-encoded `{-# START_FILE BASE64 <name> #-}` sections, which `stack new`
 decodes back into the original binary files.
 
+Files matched by a `.gitignore` are skipped, including nested `.gitignore`
+files in subdirectories, with nearer `.gitignore` files taking precedence
+over farther ones. If a top-level `.gitignore` is present, `.git` is
+skipped as well.
+
 
 For an example repository that generates a stack template, see
 [hpack-template](https://github.com/prikhi/hpack-template).

@@ -11,12 +11,25 @@ import           Data.ByteString.Builder        ( Builder
 import           Data.List                      ( intersperse
                                                 , sort
                                                 )
+import           Control.Exception              ( tryJust )
+import           Control.Monad                  ( guard )
+import           Data.Maybe                     ( mapMaybe )
+import           Data.Text.Encoding             ( decodeUtf8Lenient )
+import           Ignore                         ( Ignore
+                                                , ignores'
+                                                , parse
+                                                )
 import           System.Directory               ( listDirectory
                                                 , doesDirectoryExist
+                                                , doesFileExist
                                                 )
 import           System.Environment             ( getArgs )
 import           System.Exit                    ( exitFailure )
 import           System.FilePath                ( (</>) )
+import           System.IO.Error                ( isDoesNotExistError )
+import           System.OsPath                  ( OsPath
+                                                , encodeFS
+                                                )
 
 import qualified Data.ByteString               as BS
 import qualified Data.ByteString.Base64        as Base64
@@ -38,36 +51,103 @@ printHelp = mapM_
     , ""
     , "The generated file will be named `<folder-name>.hsfiles`"
     , "Files that are not valid UTF-8 are embedded base64-encoded."
+    , "Files matched by .gitignore files are skipped, including nested"
+    , "ones, with nearer .gitignore files taking precedence. If a"
+    , "top-level .gitignore is present, `.git` is skipped as well."
     ]
 
 
 templatize :: FilePath -> IO Builder
 templatize folder = do
-    fileNames        <- getFilesInDirectory folder
+    mRootIgnore <- loadDirIgnore folder
+    let ignoreStack = case mRootIgnore of
+            Just rootIgnore ->
+                let ig = rootIgnore <> parse ".git" in [(0, ig, globAll <> ig)]
+            Nothing -> []
+    fileNames        <- getFilesInDirectory ignoreStack folder
     namesAndContents <- mapM
         (\file -> (file, ) <$> BS.readFile (folder </> file))
         fileNames
     return $ generateHFiles namesAndContents
 
 
-getFilesInDirectory :: FilePath -> IO [FilePath]
-getFilesInDirectory baseDirectory = do
+loadDirIgnore :: FilePath -> IO (Maybe Ignore)
+loadDirIgnore dir = do
+    let gitignorePath = dir </> ".gitignore"
+    exists <- doesFileExist gitignorePath
+    if exists
+        then either (const Nothing) (Just . parse . decodeUtf8Lenient)
+                <$> tryJust (guard . isDoesNotExistError)
+                            (BS.readFile gitignorePath)
+        else return Nothing
+
+
+globAll :: Ignore
+globAll = parse "*"
+
+
+verdict :: Ignore -> Ignore -> [OsPath] -> Bool -> Maybe Bool
+verdict ig igWithGlobAll path isDir
+    | ignores' ig path isDir            = Just True
+    | ignores' igWithGlobAll path isDir = Nothing
+    | otherwise                         = Just False
+
+
+isIgnored :: [(Int, Ignore, Ignore)] -> [OsPath] -> Bool -> Bool
+isIgnored ignoreStack components isDir =
+    case
+            mapMaybe
+                (\(depth, ig, igWithGlobAll) ->
+                    verdict ig igWithGlobAll (drop depth components) isDir
+                )
+                ignoreStack
+        of
+            (v : _) -> v
+            []      -> False
+
+
+getFilesInDirectory :: [(Int, Ignore, Ignore)] -> FilePath -> IO [FilePath]
+getFilesInDirectory rootIgnoreStack baseDirectory = do
     basePaths <- listDirSorted baseDirectory
-    concat <$> mapM (recursiveList "") basePaths
+    concat <$> mapM (recursiveList rootIgnoreStack 0 [] "") basePaths
   where
     listDirSorted :: FilePath -> IO [FilePath]
     listDirSorted =
         fmap sort . listDirectory
-    recursiveList :: String -> FilePath -> IO [FilePath]
-    recursiveList parentDir path = do
+    recursiveList
+        :: [(Int, Ignore, Ignore)]
+        -> Int
+        -> [OsPath]
+        -> String
+        -> FilePath
+        -> IO [FilePath]
+    recursiveList ignoreStack depth parentComponents parentDir path = do
         let templatePath = parentDir </> path
             fullPath     = baseDirectory </> templatePath
+        component <- encodeFS path
+        let components = parentComponents ++ [component]
+            depth'      = depth + 1
         isDirectory <- doesDirectoryExist fullPath
-        if isDirectory
-            then do
-                files <- listDirSorted fullPath
-                concat <$> mapM (recursiveList templatePath) files
-            else return [templatePath]
+        if isIgnored ignoreStack components isDirectory
+            then return []
+            else if isDirectory
+                then do
+                    mChildIgnore <- loadDirIgnore fullPath
+                    let ignoreStack' = case mChildIgnore of
+                            Just childIgnore ->
+                                (depth', childIgnore, globAll <> childIgnore)
+                                    : ignoreStack
+                            Nothing -> ignoreStack
+                    files <- listDirSorted fullPath
+                    concat
+                        <$> mapM
+                                (recursiveList ignoreStack'
+                                               depth'
+                                               components
+                                               templatePath
+                                )
+                                files
+                else return [templatePath]
 
 
 generateHFiles :: [(FilePath, BS.ByteString)] -> Builder
