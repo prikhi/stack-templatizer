@@ -2,6 +2,13 @@
 
 ## master
 
+* Skip files matched by `.gitignore`, including nested `.gitignore` files,
+  and auto-exclude `.git` when a top-level `.gitignore` is present.
+* Add `--name-token` option (default `PACKAGENAME`) that replaces occurrences
+  of the token in file names & UTF-8 contents with `{{name}}`, so a source
+  folder can remain a compilable package while still producing a
+  templatized output.
+
 
 ## v0.1.2.0
 
